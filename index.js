@@ -5,6 +5,9 @@ const Joi = require("joi");
 const app = express();
 app.use(express.json());
 
+app.set("view engine", "pug");
+// app.set("views", "./views"); //default
+
 const courses = [
     { id: 1, name: "course1" },
     { id: 2, name: "course2" },
@@ -13,7 +16,8 @@ const courses = [
 
 // ***** ***** *****
 app.get("/", (req, res) => {
-    res.send("hello there..");
+    // res.send("hello there..");
+    res.render("index", { title: "iExpress", message: "Main Course" });
 });
 
 app.get("/api/courses", (req, res) => {
@@ -56,7 +60,7 @@ app.put("/api/courses/:id", (req, res) => {
     res.send(course);
 });
 
-// ***** PUT *****
+// ***** DELETE *****
 app.delete("/api/courses/:id", (req, res) => {
     const course = courses.find((c) => c.id === parseInt(req.params.id));
     if (!course)
@@ -65,7 +69,7 @@ app.delete("/api/courses/:id", (req, res) => {
     const index = courses.indexOf(course);
     courses.splice(index, 1);
     // courses = courses.filter((c) => c.id !== parseInt(req.params.id));
-    console.log(courses);
+    // console.log(courses);
 
     res.send(course);
 });
